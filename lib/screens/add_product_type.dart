@@ -29,7 +29,7 @@ class AddProductType extends StatelessWidget {
                       builder: (logic) {
                         return GestureDetector(
                           onTap: () {
-                            logic.selectImage();
+                            logic.imageSelect();
                           },
                           child: CircleAvatar(
                             maxRadius: 70,

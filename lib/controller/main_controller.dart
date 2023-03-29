@@ -36,6 +36,9 @@ class MainController extends GetxController {
   late CollectionReference collectionReference4;
   late CollectionReference collectionReference5;
   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+
+  final ImagePicker _picker = ImagePicker();
+  XFile? image;
   @override
   void onInit() {
     collectionReference = firebaseFirestore.collection("product");
@@ -101,6 +104,7 @@ class MainController extends GetxController {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
+              imageSelect();
               selectedImage = images[index].image!;
               update(['image']);
               Get.back();
@@ -114,8 +118,6 @@ class MainController extends GetxController {
     ));
   }
 
-  final ImagePicker _picker = ImagePicker();
-  XFile? image;
   void imageSelect() async {
     final XFile? selectedImage =
         await _picker.pickImage(source: ImageSource.gallery);
@@ -181,6 +183,7 @@ class MainController extends GetxController {
         showdilog();
         try {
           showdilog();
+          uploadImageToFirebase();
           var re = <String, dynamic>{"type": name.text, "image": selectedImage};
           collectionReference3.doc().set(re).whenComplete(() {
             name.clear();

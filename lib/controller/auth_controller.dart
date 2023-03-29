@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:e_commerace/screens/register_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,7 +51,7 @@ class AuthController extends GetxController {
   String? get user_ch => _user.value!.email;
   _initialScreen(User? user) {
     if (user == null) {
-      route = LoginView();
+      route = RegisterView();
     } else {
       route = HomeScreen();
     }
@@ -191,7 +192,7 @@ class AuthController extends GetxController {
         Get.back();
         email.clear();
         password.clear();
-        Get.offAll(() => HomeScreen());
+        // Get.offAll(() => HomeScreen());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           Get.back();
