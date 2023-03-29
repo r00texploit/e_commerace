@@ -38,7 +38,7 @@ dependencies:
   firebase_core: ^1.15.0
   cached_network_image:
   get:
-  dropdown_search:
+  dropdown_search: ^3.0.1
   flutter_spinkit:
   image_picker:
 
