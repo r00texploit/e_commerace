@@ -7,7 +7,7 @@ void showdilog() {
     const AlertDialog(
       backgroundColor: Colors.transparent,
       content: Center(
-        child: SpinKitCircle(
+        child: SpinKitCubeGrid(
           color: Colors.indigo,
           size: 50,
         ),

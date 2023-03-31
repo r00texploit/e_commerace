@@ -22,12 +22,12 @@ class MainController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RxList<Product> products = RxList<Product>([]);
   RxList<Delivery> delivery = RxList<Delivery>([]);
-  RxList<ProductType> productType = RxList<ProductType>([]);
+  // RxList<ProductType> productType = RxList<ProductType>([]);
   RxList<Users> users = RxList<Users>([]);
   RxList<String> types = RxList<String>([]);
   RxList<Images> images = RxList<Images>([]);
   late TextEditingController name, type, price, desc, number;
-  late dynamic color;
+  late dynamic company;
   String selectedImage = '';
   DateTime time = DateTime.now();
   late CollectionReference collectionReference;
@@ -53,7 +53,7 @@ class MainController extends GetxController {
     number = TextEditingController();
     products.bindStream(getAllProduct());
     delivery.bindStream(getAllDelivery());
-    productType.bindStream(getAllProductType());
+    // productType.bindStream(getAllProductType());
     users.bindStream(getAllUser());
     images.bindStream(getAllImages());
     super.onInit();
@@ -65,9 +65,9 @@ class MainController extends GetxController {
   Stream<List<Delivery>> getAllDelivery() =>
       collectionReference2.snapshots().map(
           (query) => query.docs.map((item) => Delivery.fromMap(item)).toList());
-  Stream<List<ProductType>> getAllProductType() =>
-      collectionReference3.snapshots().map((query) =>
-          query.docs.map((item) => ProductType.fromMap(item)).toList());
+  // Stream<List<ProductType>> getAllProductType() =>
+  //     collectionReference3.snapshots().map((query) =>
+  //         query.docs.map((item) => ProductType.fromMap(item)).toList());
 
   Stream<List<Users>> getAllUser() => collectionReference4
       .snapshots()
@@ -75,12 +75,12 @@ class MainController extends GetxController {
   Stream<List<Images>> getAllImages() => collectionReference5
       .snapshots()
       .map((query) => query.docs.map((item) => Images.fromMap(item)).toList());
-  Future getAllType() async {
-    types.clear();
-    for (var element in productType) {
-      types.add(element.type!);
-    }
-  }
+  // Future getAllType() async {
+  //   types.clear();
+  //   for (var element in productType) {
+  //     types.add(element.type!);
+  //   }
+  // }
 
   String? validate(String value) {
     if (value.isEmpty) {
@@ -154,7 +154,7 @@ class MainController extends GetxController {
             "type": type.text,
             "description": desc.text,
             "image": image_url,
-            "color": color,
+            "company": company,
             "price": int.tryParse(price.text.toString()),
             "number": int.tryParse(number.text.toString()),
           };

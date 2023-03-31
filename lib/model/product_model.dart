@@ -8,13 +8,13 @@ class Product {
   String? image;
   int? price;
   int? number;
-  List? color;
+  String? company;
 
   Product(
       {this.id,
       required this.type,
       required this.price,
-      required this.color,
+      required this.company,
       required this.image,
       required this.name,
       required this.description,
@@ -26,7 +26,7 @@ class Product {
     price = data["price"];
     name = data["name"];
     image = data["image"];
-    color = data["color"];
+    company = data["company"];
     number = data["number"];
     description = data["description"];
   }

@@ -91,8 +91,8 @@ class ProductPage extends StatelessWidget {
                 builder: (logic) {
                   return SimpleListTile(
                     onTap: () async {
-                      await logic.getAllType();
-                      Get.to(AddProduct());
+                      // await logic.getAllType();
+                      Get.to(() => const AddProduct());
                     },
                     title: const Text(
                       'add new product',

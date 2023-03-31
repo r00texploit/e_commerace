@@ -111,22 +111,21 @@ class AddProduct extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        DropdownSearch<String>.multiSelection(
+                        DropdownSearch<String>(
                           mode: Mode.MENU,
                           showSelectedItems: true,
                           items: const [
-                            "Green",
-                            "White",
-                            "Black",
-                            "Yellow",
-                            "Red",
-                            "Brown"
+                            "Nile",
+                            "Bee",
+                            "Iran",
+                            "Abrasi",
+                            "Gadrah",
                           ],
                           dropdownSearchDecoration: const InputDecoration(
-                            labelText: "Color Menu",
+                            labelText: "Company Menu",
                           ),
                           onChanged: (value) {
-                            logic.color = value;
+                            logic.company = value;
                           },
                           // selectedItems: ["white"],
                         ),

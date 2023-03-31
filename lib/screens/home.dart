@@ -1,3 +1,4 @@
+import 'package:e_commerace/controller/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../screens/customer.dart';
@@ -12,6 +13,14 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Panel'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                var auth = AuthController();
+                auth.signOut();
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
