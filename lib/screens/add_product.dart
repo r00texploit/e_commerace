@@ -24,6 +24,7 @@ class AddProduct extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: GetX<MainController>(
           builder: (logic) {
+            logic.getAllType();
             return logic.types.isEmpty
                 ? const Center(
                     child: Text('No Type available to add'),

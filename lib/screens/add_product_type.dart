@@ -1,5 +1,9 @@
+// import 'dart:html';
+
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import '../controller/main_controller.dart';
 
@@ -33,11 +37,11 @@ class AddProductType extends StatelessWidget {
                           },
                           child: CircleAvatar(
                             maxRadius: 70,
-                            backgroundImage: logic.selectedImage.isEmpty
+                            backgroundImage: logic.image!.path.isEmpty
                                 ? Image.asset(
                                     'assets/images/1.png',
                                   ).image
-                                : Image.network(logic.selectedImage).image,
+                                : Image.file(File(logic.image!.path)).image,
                             child: const Icon(Icons.add_a_photo,
                                 color: Colors.white),
                           ),

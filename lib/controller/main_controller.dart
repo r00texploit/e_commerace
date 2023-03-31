@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,7 +23,7 @@ class MainController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RxList<Product> products = RxList<Product>([]);
   RxList<Delivery> delivery = RxList<Delivery>([]);
-  // RxList<ProductType> productType = RxList<ProductType>([]);
+  RxList<ProductType> productType = RxList<ProductType>([]);
   RxList<Users> users = RxList<Users>([]);
   RxList<String> types = RxList<String>([]);
   RxList<Images> images = RxList<Images>([]);
@@ -53,9 +54,10 @@ class MainController extends GetxController {
     number = TextEditingController();
     products.bindStream(getAllProduct());
     delivery.bindStream(getAllDelivery());
-    // productType.bindStream(getAllProductType());
+    productType.bindStream(getAllProductType());
     users.bindStream(getAllUser());
     images.bindStream(getAllImages());
+    // getAllType();
     super.onInit();
   }
 
@@ -65,9 +67,9 @@ class MainController extends GetxController {
   Stream<List<Delivery>> getAllDelivery() =>
       collectionReference2.snapshots().map(
           (query) => query.docs.map((item) => Delivery.fromMap(item)).toList());
-  // Stream<List<ProductType>> getAllProductType() =>
-  //     collectionReference3.snapshots().map((query) =>
-  //         query.docs.map((item) => ProductType.fromMap(item)).toList());
+  Stream<List<ProductType>> getAllProductType() =>
+      collectionReference3.snapshots().map((query) =>
+          query.docs.map((item) => ProductType.fromMap(item)).toList());
 
   Stream<List<Users>> getAllUser() => collectionReference4
       .snapshots()
@@ -75,12 +77,14 @@ class MainController extends GetxController {
   Stream<List<Images>> getAllImages() => collectionReference5
       .snapshots()
       .map((query) => query.docs.map((item) => Images.fromMap(item)).toList());
-  // Future getAllType() async {
-  //   types.clear();
-  //   for (var element in productType) {
-  //     types.add(element.type!);
-  //   }
-  // }
+
+  Future getAllType() async {
+    types.clear();
+    for (var element in productType) {
+      types.add(element.type!);
+      log("${element.type!}");
+    }
+  }
 
   String? validate(String value) {
     if (value.isEmpty) {
@@ -93,37 +97,44 @@ class MainController extends GetxController {
   void selectImage() {
     Get.defaultDialog(
         content: SizedBox(
-      height: 200,
-      child: GridView.builder(
-        itemCount: images.length,
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-            maxCrossAxisExtent: 200,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            onTap: () {
-              imageSelect();
-              selectedImage = images[index].image!;
-              update(['image']);
-              Get.back();
-            },
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(images[index].image!),
-            ),
-          );
-        },
-      ),
-    ));
+            height: 200,
+            child:
+                // GridView.builder(
+                // itemCount: images.length,
+                // gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                //     maxCrossAxisExtent: 200,
+                //     childAspectRatio: 3 / 2,
+                //     crossAxisSpacing: 20,
+                //     mainAxisSpacing: 20),
+                // itemBuilder: (BuildContext context, int index) {
+                //   return
+                GestureDetector(
+              onTap: () {
+                imageSelect();
+                // selectedImage = images[index].image!;
+                update(['image']);
+
+                // Get.back();
+              },
+              child: CircleAvatar(
+                // ignore: unnecessary_null_comparison
+                backgroundImage: NetworkImage(images[0].image!),
+                child: Icon(Icons.add_a_photo),
+              ),
+            )));
   }
+  //   ),
+  // ));
+  // }
 
   void imageSelect() async {
     final XFile? selectedImage =
         await _picker.pickImage(source: ImageSource.gallery);
     if (selectedImage!.path.isNotEmpty) {
       image = selectedImage;
+      log("message: ${image!.path}");
       update(['image']);
+      update();
     }
   }
 
@@ -179,12 +190,12 @@ class MainController extends GetxController {
 
   addProductType() async {
     if (formKey.currentState!.validate()) {
-      if (selectedImage.isNotEmpty) {
+      if (image!.path.isNotEmpty) {
         showdilog();
         try {
           showdilog();
           uploadImageToFirebase();
-          var re = <String, dynamic>{"type": name.text, "image": selectedImage};
+          var re = <String, dynamic>{"type": name.text, "image": image!.name};
           collectionReference3.doc().set(re).whenComplete(() {
             name.clear();
             Get.back();

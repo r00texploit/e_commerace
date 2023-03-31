@@ -19,7 +19,7 @@ class Users {
 
   Users.fromMap(DocumentSnapshot data) {
     id = data.id;
-    shop_name = data["shop_name"];
+    // shop_name = data["shop_name"];
     name = data["name"];
     email = data["email"];
     number = data["number"];

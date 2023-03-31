@@ -192,7 +192,7 @@ class AuthController extends GetxController {
         Get.back();
         email.clear();
         password.clear();
-        // Get.offAll(() => HomeScreen());
+        Get.offAll(() => HomeScreen());
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           Get.back();
